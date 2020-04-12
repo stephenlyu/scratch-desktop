@@ -13,6 +13,7 @@
     "compile": "rimraf ./dist/ && electron-webpack --bail --display-error-details --env.minify=false",
     "fetch": "rimraf ./static/assets/ && mkdirp ./static/assets/ && node ./scripts/fetchMediaLibraryAssets.js",
     "dist": "npm run build-gui && npm run fetch && npm run compile -p && node ./scripts/electron-builder-wrapper.js",
+    "mydist": "npm run build-gui && npm run compile -p && node ./scripts/electron-builder-wrapper.js",
     "dist:dir": "npm run dist -- --dir -c.compression=store -c.mac.identity=null",
     "lint": "eslint --cache --color --ext .jsx,.js ."
   },
@@ -21,7 +22,9 @@
     "url": "git+ssh://git@github.com/LLK/scratch-desktop.git"
   },
   "dependencies": {
-    "source-map-support": "^0.5.12"
+    "adm-zip": "^0.4.14",
+    "source-map-support": "^0.5.12",
+    "write-file-atomic": "^3.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.5.4",
@@ -35,7 +38,7 @@
     "babel-loader": "^8.0.6",
     "babel-plugin-react-intl": "^2.3.1",
     "copy-webpack-plugin": "^4.6.0",
-    "electron": "^6.1.7",
+    "electron": "^6.1.9",
     "electron-builder": "^22.2.0",
     "electron-devtools-installer": "^2.2.4",
     "electron-notarize": "^0.2.1",

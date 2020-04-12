@@ -1,13 +1,16 @@
-import {ipcRenderer, shell} from 'electron';
+import {ipcRenderer, shell, remote} from 'electron';
 import bindAll from 'lodash.bindall';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {compose} from 'redux';
 import GUI, {AppStateHOC} from 'scratch-gui';
-
+import path from 'path';
 import ElectronStorageHelper from '../common/ElectronStorageHelper';
+import PackageStorageHelper from "../common/PackageStorageHelper";
 
 import styles from './app.css';
+
+const app = remote.app;
 
 const defaultProjectId = 0;
 
@@ -59,6 +62,7 @@ const ScratchDesktopHOC = function (WrappedComponent) {
         }
         handleStorageInit (storageInstance) {
             storageInstance.addHelper(new ElectronStorageHelper(storageInstance));
+            storageInstance.addHelper(new PackageStorageHelper(storageInstance, path.resolve(app.getPath("appData"), "Scratch Desktop/packages")));
         }
         handleTelemetryModalOptIn () {
             ipcRenderer.send('setTelemetryDidOptIn', true);
